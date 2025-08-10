@@ -10,9 +10,11 @@ import {
   HStack,
   IconButton,
   useColorMode,
+  Divider,
 } from "@chakra-ui/react";
 import { SunIcon, MoonIcon } from "@chakra-ui/icons";
 import HVACControlPanel from "./components/HVACControlPanel";
+import AgentOptimizer from "./components/AgentOptimizer"; 
 
 export default function App() {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -41,7 +43,7 @@ export default function App() {
         </HStack>
       </Flex>
 
-      {/* MAIN CARD */}
+      {/* MAIN: Controller card */}
       <Center py={10}>
         <Container
           bg="white"
@@ -62,6 +64,42 @@ export default function App() {
             HVAC Controller
           </Heading>
           <HVACControlPanel />
+        </Container>
+      </Center>
+
+      {/* DIVIDER */}
+      <Container maxW="6xl" px={6}>
+        <Divider borderColor="gray.300" _dark={{ borderColor: "gray.600" }} />
+      </Container>
+
+      {/* AGENT: CrewAI optimizer section */}
+      <Center py={10}>
+        <Container maxW="6xl" px={6}>
+          <Heading
+            as="h2"
+            size="lg"
+            mb={3}
+            color="teal.600"
+            _dark={{ color: "teal.300" }}
+            textAlign="center"
+          >
+            Agent Optimizer (CrewAI)
+          </Heading>
+          <Text
+            fontSize="sm"
+            color="gray.600"
+            _dark={{ color: "gray.300" }}
+            textAlign="center"
+            mb={6}
+          >
+            Generates a 24-hour schedule using your fuzzy controller as the oracle. Probe the basic
+            endpoint, then run optimization.
+          </Text>
+
+          {/* AgentOptimizer renders its own white card; */}
+          <Box>
+            <AgentOptimizer />
+          </Box>
         </Container>
       </Center>
 
