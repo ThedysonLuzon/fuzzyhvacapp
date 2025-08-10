@@ -1,0 +1,23 @@
+plan_task:
+  description: >
+    Generate a tentative hourly setpoint plan for the next 24h given
+    comfort_band={comfort_low}-{comfort_high}°C and occupancy pattern={occupancy}.
+    Keep changes gradual (≤1°C/hr), and prefer tighter control during high occupancy.
+  expected_output: >
+    A JSON array of 24 setpoints in °C (numbers only, no text).
+
+  agent: planner
+
+optimize_task:
+  description: >
+    Using the setpoints from plan_task as 'indoor' inputs and the weather forecast
+    at (lat={lat}, lon={lon}) as 'outdoor', compute hourly fuzzy HVAC power with:
+    - get_weather_forecast(lat, lon, 24)
+    - compute_hvac_power_batch(indoor=setpoints, outdoor=forecast.temps, occupancy={occupancy})
+    Return STRICT JSON:
+    {"hours":[0..23], "setpoints":[...24], "outdoor":[...24], "occupancy":[...24], "power":[...24]}
+
+  expected_output: >
+    Valid JSON string only (no markdown), matching the schema above.
+
+  agent: optimizer

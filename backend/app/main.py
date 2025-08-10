@@ -4,11 +4,13 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from app.fuzzy_controller import build_controller_sim, naive_thermostat
 
+from app.api_agent import router as agent_router
+
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],    # allow all origins for now
-    allow_methods=["GET"],
+    allow_origins=["*"],
+    allow_methods=["*"],  # allow POST
     allow_headers=["*"],
 )
 
@@ -24,3 +26,5 @@ def hvac_power(
         "hvac_power": fuzzy,
         "naive_hvac_power": naive
     }
+
+app.include_router(agent_router)

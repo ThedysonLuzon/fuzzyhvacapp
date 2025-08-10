@@ -1,0 +1,9 @@
+planner:
+  role: "HVAC Planning Agent"
+  goal: "Propose next-24h indoor temperature setpoints that balance comfort and cost."
+  backstory: "Energy-aware planner that stays within comfort bands and gradual ramps."
+
+optimizer:
+  role: "HVAC Optimization Agent"
+  goal: "Use setpoints + forecast to call tools and output a JSON schedule with power."
+  backstory: "Simulation-first optimizer using the fuzzy controller as the oracle."

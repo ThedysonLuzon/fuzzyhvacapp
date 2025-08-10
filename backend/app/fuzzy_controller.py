@@ -4,6 +4,12 @@ import numpy as np
 import skfuzzy as fuzz
 from skfuzzy import control as ctrl
 
+__all__ = [
+    "build_controller",
+    "build_controller_sim",
+    "naive_thermostat",
+]
+
 def build_controller() -> ctrl.ControlSystemSimulation:
     """
     Create and return a fresh ControlSystemSimulation for the HVAC fuzzy controller.
@@ -34,7 +40,7 @@ def build_controller() -> ctrl.ControlSystemSimulation:
     power['moderate'] = fuzz.trimf(power.universe, [3, 5.5, 8])
     power['high'] = fuzz.trimf(power.universe, [7, 10, 10])
 
-    # Define the rule base
+    # Rule base
     rules = [
         ctrl.Rule(indoor['cold'] & occupancy['high'], power['high']),
         ctrl.Rule(indoor['cold'] & occupancy['low'], power['moderate']),
@@ -57,13 +63,11 @@ def build_controller_sim(indoor: float, occupancy: float, outdoor: float) -> flo
     sim.input['indoor_temp'] = indoor
     sim.input['occupancy']    = occupancy
     sim.input['outdoor_temp'] = outdoor
-
     try:
         sim.compute()
     except Exception as e:
         print(f"[build_controller_sim] compute error: {e}")
         return 0.0
-
     val = sim.output.get('hvac_power')
     if val is None:
         print(f"[build_controller_sim] missing 'hvac_power' in output: {sim.output}")
