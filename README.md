@@ -9,6 +9,8 @@
 A demo HVAC system that **plans** a 24-hour temperature schedule with an agentic layer (CrewAI) and evaluates it using a **fuzzy controller** (scikit-fuzzy).  
 Backend: **FastAPI** · Frontend: **React + Chakra UI**.
 
+![System Block Diagram](frontend/public/fuzzyhvacappblockdiagram.png)
+
 ---
 
 ## Overview
